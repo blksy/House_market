@@ -3,7 +3,7 @@ import {Link, useNavigate} from 'react-router-dom'
 import {ReactComponent as ArroRightIcon} from '../assets/svg/keyboardArrowRightIcon.svg'
 import visibilityIcon from '../assets/svg/visibilityIcon.svg'
 
-function SingIn(){
+function SignIn(){
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({
         email: '',
@@ -13,7 +13,12 @@ function SingIn(){
 
     const navigate = useNavigate();
 
-    const onChange = () => {}
+    const onChange = (e) => {
+        setFormData((prevState) => ({
+            ...prevState,
+            [e.target.id]: e.target.value
+    }))
+    }
 
     return(
         <>
@@ -40,22 +45,37 @@ function SingIn(){
                           value={password}
                           onChange={onChange}
                           />
-                        <img 
-                          src="{visibilityIcon}" 
-                          alt="show password" 
-                          className="showPassword" 
-                          onClick={() => setShowPassword((prevState)=> !prevState)}/>
+                          <img
+                          src={visibilityIcon}
+                          alt='show password'
+                          className='showPassword'
+                          onClick={() => setShowPassword((prevState) => !prevState)}
+                        />
                     </div>
 
                     <Link to= '/forgot-password'
                     className="forgotPasswordLink">
                         Forgot Password
                     </Link>
+
+                    <div className="signInBar">
+                       <p className="signInText">
+                       Sign In
+                       </p>
+                       <button className="signInButton">
+                         <ArroRightIcon fill='#ffffff' width='34px' height='34px'/>
+                       </button>
+                    </div>
                 </form>
+
+                {/*Google OAuth*/}
+                <Link to='sign-up' className="registerLink">
+                   Sign Up Instead
+                </Link>
             </main>
            </div>
         </>
     )
 }
 
-export default SingIn;
+export default SignIn;
