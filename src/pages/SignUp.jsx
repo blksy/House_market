@@ -10,7 +10,7 @@ function SignUp(){
         email: '',
         password: ''
     })
-    const {mname, email, password} =  formData;
+    const {name, email, password} =  formData;
 
     const navigate = useNavigate();
 
@@ -69,7 +69,7 @@ function SignUp(){
 
                     <div className="signUpBar">
                        <p className="signUpText">
-                       Sign In
+                       Sign Up
                        </p>
                        <button className="signUnButton">
                          <ArroRightIcon fill='#ffffff' width='34px' height='34px'/>
