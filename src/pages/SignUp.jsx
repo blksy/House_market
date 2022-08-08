@@ -1,5 +1,7 @@
 import { useState } from "react";
 import {Link, useNavigate} from 'react-router-dom'
+import {getAuth, createUserWithEmailAndPassword, updateProfile} from 'firebase/auth'
+import {db} from '../firebase.config'
 import {ReactComponent as ArroRightIcon} from '../assets/svg/keyboardArrowRightIcon.svg'
 import visibilityIcon from '../assets/svg/visibilityIcon.svg'
 
@@ -21,6 +23,26 @@ function SignUp(){
     }))
     }
 
+    const onSubmit = async (e) => {
+      e.preventDefault()
+      try{
+        const auth = getAuth()
+        
+        const userCredentials = await createUserWithEmailAndPassword(auth, email, password)
+
+        const user = userCredentials.user
+
+        updateProfile(auth.currentUser, {
+            displayName: name
+        })
+
+        navigate('/')
+
+      }catch(error){
+        console.log(error);
+      }
+    }
+
     return(
         <>
            <div className="pageContainer">
@@ -28,7 +50,7 @@ function SignUp(){
                 <p className="pageHeader">Welcome Back!</p>
             </header>
             <main>
-                <form>
+                <form onSubmit={onSubmit}>
                 <input 
                 type="text" 
                 className="nameInput" 
@@ -71,14 +93,14 @@ function SignUp(){
                        <p className="signUpText">
                        Sign Up
                        </p>
-                       <button className="signUnButton">
-                         <ArroRightIcon fill='#ffffff' width='34px' height='34px'/>
+                       <button className="signUpButton">
+                         <ArroRightIcon fill=' #ffffff' width='34px' height='34px'/>
                        </button>
                     </div>
                 </form>
 
                 {/*Google OAuth*/}
-                <Link to='sign-in' className="registerLink">
+                <Link to='/sign-in' className="registerLink">
                    Sign In Instead
                 </Link>
             </main>
