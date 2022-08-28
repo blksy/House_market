@@ -31,7 +31,7 @@ function Category(){
           querySnapshot.forEach((doc) =>{
             return listings.push({
                id: doc.id,
-               data: doc.data()
+               data: doc.data(),
             })
           })
 
@@ -41,11 +41,10 @@ function Category(){
         }catch(error){
            toast.error('Could not fetch the data')
         }
-
       }
 
       fetchListings()
-    })
+    },[params.categoryName])
 
     return(
         <div className="category">
@@ -55,7 +54,7 @@ function Category(){
             </p>
           </header>
 
-          {loading ? <Spinner/> : listings && listings.length > 0 ?
+          {loading ? (<Spinner/>) : listings && listings.length > 0 ?
           <>
           <main>
             <ul className="categoryListings">
@@ -64,7 +63,7 @@ function Category(){
                 ))}
             </ul>
           </main>
-          </> : <p>No listing for ${params.categoryName}</p>}
+          ) </> : (<p>No listing for ${params.categoryName}</p>)}
         </div>
     )
 }
