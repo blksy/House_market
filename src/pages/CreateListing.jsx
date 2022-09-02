@@ -1,9 +1,17 @@
 import {useState, useEffect, useRef} from 'react'
 import {getAuth, onAuthStateChanged} from 'firebase/auth'
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from 'firebase/storage'
+import {db} from '../firebase.config'
 import { useNavigate} from 'react-router-dom'
 import Spinner from '../components/spinner'
 import {toast} from 'react-toastify'
-import { async } from '@firebase/util'
+import { v4 as uuidv4 } from 'uuid' 
+
 
 function CreateListing(){
     const [geolocationEnabled, setGeolocationEnabled] = useState(true)
@@ -66,7 +74,7 @@ function CreateListing(){
       let geolocation = {}
       let location
       if(geolocationEnabled){
-        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}$key=AIzaSyAJ_OMjBHlqFDfRzy_7fozNytuH93YJ_vc`)
+        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}$key=${process.env.REACT_APP_GEOCODE_API_KEY}`)
       
         const data = await response.json()
       
@@ -87,6 +95,14 @@ function CreateListing(){
         geolocation.lat = latitude
         geolocation.lng = longitude
         location = address
+      }
+
+      //Store img in firebase
+      const storeImage = async (image) =>{
+        return new Promise((resolve, reject)=>{
+          const storage = getStorage()
+          const fileName = `${auth.currentUser.uid}-$`
+        })
       }
 
       setLoading(false)
