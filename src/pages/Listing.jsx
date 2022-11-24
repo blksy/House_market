@@ -26,8 +26,12 @@ function Listing() {
         setLoading(false)
       }
     }
-    fetchListing
+    fetchListing()
   }, [navigate, params.listingId])
+
+  if(loading){
+    return <Spinner/>
+  }
 
   return (
     <main>
@@ -40,6 +44,20 @@ function Listing() {
         },2000)
       }}>
         <img src={shareIcon} alt=""/>
+      </div>
+
+      {shareLinkCopied && <p className='linkCopied'>Link Copied</p>}
+
+      <div className='listingDetails'>
+        <p className='listingName'>{listing.name} - {
+           listing.offer ? listing.discountedPrice : listing.regularPrice}
+        </p>
+        <p className='listingLocation'>
+          {listing.location}
+        </p>
+        <p className='listingType'>
+          for {listing.type === 'rent' ? 'Rent' : 'Sale'}
+        </p>
       </div>
     </main>
   )
